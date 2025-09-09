@@ -8,6 +8,7 @@
 }
 
 .weather-card {
+    position: fixed;
     place-self: center;
     padding: 40px;
     border-radius: 10px;
