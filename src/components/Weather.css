@@ -109,6 +109,7 @@
 @media (max-width: 768px) {
   .weather-card {
     padding: 25px;
+    width: 95%;
   }
 
   .weather-icon {
@@ -173,5 +174,55 @@
 
   .humidity, .wind {
     font-size: 20px;
+  }
+}
+
+@media (max-width: 300px) {
+  .weather-card {
+    padding: 15px;
+    width: 95%;
+  }
+
+  .search-bar input {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  .search-bar button {
+    width: 35px;
+    height: 35px;
+  }
+
+  .weather-icon {
+    width: 80px;
+    margin: 15px 0;
+  }
+
+  .temp {
+    font-size: 28px;
+  }
+
+  .loc {
+    font-size: 18px;
+  }
+
+  .weather-data {
+    flex-direction: column;
+    gap: 15px;
+    padding: 0 10px;
+    text-align: center;
+  }
+
+  .col {
+    justify-content: center;
+  }
+
+  .col a {
+    font-size: 28px;
+    margin-right: 8px;
+  }
+
+  .humidity, .wind {
+    font-size: 16px;
   }
 }
