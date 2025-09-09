@@ -109,11 +109,11 @@
 @media (max-width: 768px) {
   .weather-card {
     padding: 25px;
-    width: 95%;
+    width: 90%;
   }
 
   .weather-icon {
-    width: 120px;
+    width: 100px;
     margin: 20px 0;
   }
 
