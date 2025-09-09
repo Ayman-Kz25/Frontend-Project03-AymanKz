@@ -104,3 +104,74 @@
     font-size: 28px;
     margin-top: -6px;
 }
+
+/* Responsive - Media Query */
+@media (max-width: 768px) {
+  .weather-card {
+    padding: 25px;
+  }
+
+  .weather-icon {
+    width: 120px;
+    margin: 20px 0;
+  }
+
+  .temp {
+    font-size: 45px;
+  }
+
+  .loc {
+    font-size: 28px;
+  }
+
+  .weather-data {
+    gap: 30px;
+  }
+
+  .humidity, .wind {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-bar input {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+
+  .search-bar button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .weather-icon {
+    width: 100px;
+  }
+
+  .temp {
+    font-size: 35px;
+  }
+
+  .loc {
+    font-size: 22px;
+  }
+
+  .weather-data {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .col {
+    justify-content: center;
+  }
+
+  .col a {
+    font-size: 35px;
+    margin-right: 10px;
+  }
+
+  .humidity, .wind {
+    font-size: 20px;
+  }
+}
