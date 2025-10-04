@@ -21,39 +21,40 @@
 
 /* Dynamic weather backgrounds */
 .bg-clear {
-  background: linear-gradient(135deg, #87ceeb, #a1c4fd);
+  background: linear-gradient(135deg, #80deea, #fceabb); /* sunny yellow-golden */
   color: #222;
 }
 
 .bg-cloudy {
-  background: linear-gradient(135deg, #d7d2cc, #304352);
+  background: linear-gradient(135deg, #757f9a, #d7dde8); /* soft gray-blue */
   color: #fff;
 }
 
 .bg-rain {
-  background: linear-gradient(135deg, #89f7fe, #66a6ff);
+  background: linear-gradient(135deg, #3a7bd5, #00d2ff); /* deep blue to bright cyan */
   color: #fff;
 }
 
 .bg-snow {
-  background: linear-gradient(135deg, #e0eafc, #cfdef3);
+  background: linear-gradient(135deg, #e0f7fa, #80deea); /* icy blue shades */
   color: #333;
 }
 
 .bg-fog {
-  background: linear-gradient(135deg, #d3cce3, #e9e4f0);
+  background: linear-gradient(135deg, #b0bec5, #eceff1); /* muted grayish-white */
   color: #333;
 }
 
 .bg-thunder {
-  background: linear-gradient(135deg, #434343, #000000);
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* dark stormy blue-gray */
   color: #fff;
 }
 
 .bg-default {
-  background: linear-gradient(135deg, #74ebd5, #acb6e5);
+  background: linear-gradient(135deg, #ffecd2, #fcb69f); /* soft warm gradient */
   color: #222;
 }
+
 
 .weather-header {
   display: flex;
