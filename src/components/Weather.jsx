@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./Weather.css";
 import clear_icon from "../assets/clear.png";
 import cloudy_icon from "../assets/cloudy.png";
@@ -14,9 +14,12 @@ import snow_icon from "../assets/snow.png";
 import thunder_icon from "../assets/thunder.png";
 import windy_icon from "../assets/windy.png";
 
+import LocationWeather from "./LocationWeather";
+
 const Weather = () => {
   const inputRef = useRef();
   const [weatherData, setWeatherData] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const getWeatherIcon = (main, description, icon) => {
     switch (main) {
@@ -61,20 +64,15 @@ const Weather = () => {
     }
   };
 
-  const search = async (city) => {
-    if (city === "") {
-      alert("Enter City Name First!");
-      return;
-    }
+  const fetchWeatherByCoords = useCallback(async (lat, lon) => {
     try {
-      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${
+      setLoading(true);
+      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${
         import.meta.env.VITE_API_KEY
       }`;
 
       const response = await fetch(apiUrl);
       const data = await response.json();
-
-      console.log(data);
 
       if (!response.ok) {
         alert(data.message);
@@ -93,23 +91,114 @@ const Weather = () => {
         temp: Math.floor(data.main.temp),
         loc: data.name,
         icon: icon,
+        main: data.weather[0].main,
+        description: data.weather[0].description,
       });
     } catch (error) {
-      setWeatherData(false);
+      console.error("Error fetching location weather: ", error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const search = async (city) => {
+    if (city === "") {
+      alert("Enter City Name First!");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${
+        import.meta.env.VITE_API_KEY
+      }`;
+
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message);
+        return;
+      }
+
+      const icon = getWeatherIcon(
+        data.weather[0].main,
+        data.weather[0].description,
+        data.weather[0].icon
+      );
+
+      setWeatherData({
+        humidity: data.main.humidity,
+        windSpeed: data.wind.speed,
+        temp: Math.floor(data.main.temp),
+        loc: data.name,
+        icon: icon,
+        main: data.weather[0].main,
+        description: data.weather[0].description,
+      });
+    } catch (error) {
       console.error("An error occured in fetching the data!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getBackgroundClass = () => {
+    if (!weatherData) return "bg-default";
+
+    const { main, description } = weatherData;
+
+    switch (main) {
+      case "Clear":
+        return "bg-clear";
+      case "Clouds":
+        if (
+          description.includes("scattered") ||
+          description.includes("few") ||
+          description.includes("partly")
+        )
+          return "bg-cloudy";
+        return "bg-cloudy";
+      case "Rain":
+      case "Drizzle":
+        return "bg-rain";
+      case "Thunderstorm":
+        return "bg-thunder";
+      case "Snow":
+        return "bg-snow";
+      case "Mist":
+      case "Fog":
+      case "Haze":
+      case "Smoke":
+        return "bg-fog";
+      case "Wind":
+      case "Breeze":
+        return "bg-windy";
+      default:
+        return "bg-default";
     }
   };
 
   return (
-    <div className="weather-card">
+    <div className={`weather-card ${getBackgroundClass()}`}>
+      <header className="weather-header">
+        <h1>SkyScope</h1>
+        <p className="tagline">Check your city's weather instantlly!</p>
+      </header>
+
       <div className="search-bar">
         <input ref={inputRef} type="text" placeholder="Enter City Name" />
         <button type="button" onClick={() => search(inputRef.current.value)}>
           <i class="ri-search-line"></i>
         </button>
+
+        {/*Optionally fetch currect location weather*/}
+        <LocationWeather onLocationDetected={fetchWeatherByCoords} />
       </div>
 
-      {weatherData ? (
+      {loading ? (
+        <p className="loading">Loading Weather Data...</p>
+      ) : weatherData ? (
         <>
           <div className="weather">
             <img src={weatherData.icon} className="weather-icon" alt="" />
